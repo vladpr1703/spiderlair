@@ -1,0 +1,28 @@
+.dialog {
+  height: 85px;
+  width: 100%;
+  border-bottom: 1px solid #3b3b3b;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.dialog:hover {
+  background-color: #3c3c3c;
+  cursor: pointer;
+}
+
+.avatar {
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.contact-name {
+  color: white;
+  font-size: 20px;
+}
+
+.short-message {
+  color: #9d9d9d;
+  font-size: 14px;
+}
