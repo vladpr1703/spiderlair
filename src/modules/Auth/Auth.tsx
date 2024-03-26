@@ -1,12 +1,10 @@
-import Head from 'next/head';
-import { useAccount, useBalance, useWalletClient } from 'wagmi';
-
-import styles from './styles.module.css';
-import { config } from '../../../config';
+import styles from './styles.module.scss';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { useAccountEffect } from 'wagmi';
 import { ConnectButton } from '../../components/ConnectButton/ConnectButton';
+import bgImg from '../../../assets/background.png';
+import Image from 'next/image';
+import { Typography } from '@mui/material';
 
 export const Auth = () => {
   const router = useRouter();
@@ -19,7 +17,21 @@ export const Auth = () => {
   return (
     <div className={styles.container}>
       <main className={styles.main}>
-        <ConnectButton />
+        <Image alt='bg' src={bgImg} priority className={styles.bg} fill />
+        <div className={styles.header}>
+          Spiders<span>Lair</span>
+        </div>
+        <div className={styles.title}>
+          <Typography color='white' fontSize={84} fontWeight={700}>
+            Welcome to SpidersLair
+          </Typography>
+          <Typography className={styles.subtitle} color='white' fontSize={18}>
+            New era for bitcoin with Spiders Enjoy new experience
+          </Typography>
+        </div>
+        <div className={styles.button}>
+          <ConnectButton />
+        </div>
       </main>
     </div>
   );

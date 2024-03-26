@@ -1,0 +1,38 @@
+.main {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  background: rgba(23, 23, 23, 0.75);
+  
+  .bg {
+    position: absolute;
+    top: 0;
+    z-index: -1;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+
+  .header {
+    font-family: 'Poppins';
+    color: white;
+    font-size: 40px;
+
+    span {
+      color: #FFB72B;
+    }
+  }
+
+  .title {
+    font-family: 'Poppins';
+    width: 610px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .button {
+    margin: 184px auto 0;
+  }
+}

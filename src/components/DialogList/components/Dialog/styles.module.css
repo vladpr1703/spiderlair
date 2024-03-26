@@ -1,20 +1,18 @@
 .dialog {
   height: 85px;
   width: 100%;
+  padding-left: 16px;
   border-bottom: 1px solid #3b3b3b;
   display: flex;
   gap: 16px;
   align-items: center;
+  overflow: hidden;
 }
+
 
 .dialog:hover {
   background-color: #3c3c3c;
   cursor: pointer;
-}
-
-.avatar {
-  border-radius: 50%;
-  padding: 8px;
 }
 
 .contact-name {

@@ -8,6 +8,7 @@ import {
   sepolia,
   zora,
 } from 'wagmi/chains';
+import { botanix } from './src/constants/botanix';
 
 export const config = getDefaultConfig({
   appName: 'RainbowKit App',
@@ -19,6 +20,7 @@ export const config = getDefaultConfig({
     arbitrum,
     base,
     zora,
+    botanix,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,

@@ -1,16 +1,20 @@
 import { ConnectButton as DefaultConnectButton } from '@rainbow-me/rainbowkit';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import styles from './styles.module.css';
 import { useAccount } from 'wagmi';
 import { config } from '../../../config';
-import { getRandomColor } from '../../utils/getRandomColor';
+import { useEffect, useState } from 'react';
+import { MetaMaskAvatar } from 'react-metamask-avatar';
 
 export const ConnectButton = () => {
-  const router = useRouter();
   const { isConnected } = useAccount({ config });
 
-  return (
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  return isClient ? (
     <DefaultConnectButton.Custom>
       {({
         account,
@@ -22,7 +26,6 @@ export const ConnectButton = () => {
         mounted,
       }) => {
         const ready = mounted && authenticationStatus !== 'loading';
-        const connected = ready && account && chain;
 
         return (
           <div
@@ -38,27 +41,11 @@ export const ConnectButton = () => {
             {(() => {
               if (!isConnected) {
                 return (
-                  <button
-                    onClick={openConnectModal}
-                    type='button'
-                    className={styles.connect}
-                  >
+                  <div onClick={openConnectModal} className={styles.connect}>
                     Connect
-                  </button>
+                  </div>
                 );
               }
-
-              if (chain?.unsupported) {
-                return (
-                  <button onClick={openChainModal} type='button'>
-                    Wrong network
-                  </button>
-                );
-              }
-
-              const avatar = account?.ensAvatar
-                ? { backgroundImage: account.ensAvatar }
-                : { backgroundColor: getRandomColor() };
 
               return (
                 <div
@@ -66,7 +53,9 @@ export const ConnectButton = () => {
                   onClick={openAccountModal}
                   className={styles['connected-button']}
                 >
-                  <div className={styles.avatar} style={avatar} />
+                  {account?.address && (
+                    <MetaMaskAvatar size={24} address={account?.address} />
+                  )}
                   {account?.displayName}
                 </div>
               );
@@ -75,5 +64,7 @@ export const ConnectButton = () => {
         );
       }}
     </DefaultConnectButton.Custom>
+  ) : (
+    <div>Loading</div>
   );
 };

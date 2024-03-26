@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import { ConnectButton } from '../../components/ConnectButton/ConnectButton';
 import styles from './styles.module.css';
 import { Menu } from '../../components/Menu/Menu';
-import { getRandomColor } from '../../utils/getRandomColor';
 import { DialogList } from '../../components/DialogList/DialogList';
 
 export const MainPage = () => {
