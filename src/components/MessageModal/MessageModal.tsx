@@ -2,6 +2,7 @@ import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { ReactElement, useRef, useState } from 'react';
+import { keccak256, toHex } from 'viem';
 import Image from 'next/image';
 import imgSrc from '../../../assets/Vector.png';
 import styles from './styles.module.scss';
@@ -33,7 +34,6 @@ export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
       switchChain({ chainId: 3636 });
       return;
     }
-
     if (addressRef.current?.value && messageRef.current?.value) {
       try {
         const result = await writeContractAsync({
@@ -44,7 +44,7 @@ export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
           args: [
             walletClient?.account.address,
             addressRef.current.value,
-            toBytes32(messageRef.current.value),
+            keccak256(toHex(messageRef.current.value)),
           ],
           chainId: 3636,
         });

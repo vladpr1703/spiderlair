@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 import img from '../../../assets/Botanix Logo.png';
 import { useState } from 'react';
 import { joinClasses } from '../../utils/joinClasses';
