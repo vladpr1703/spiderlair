@@ -1,4 +1,5 @@
 import { defineChain } from 'viem';
+import { CONTRACT_ADDRESS } from './common';
 
 export const botanix = /*#__PURE__*/ defineChain({
   id: 3636,
@@ -18,7 +19,7 @@ export const botanix = /*#__PURE__*/ defineChain({
   },
   contracts: {
     multicall3: {
-      address: '0xf37577167A93a177f26409EAA2DeFe696D2b5B59',
+      address: CONTRACT_ADDRESS,
       blockCreated: 232347,
     },
   },

@@ -1,11 +1,10 @@
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { ReactElement, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { keccak256, toHex } from 'viem';
 import Image from 'next/image';
 import imgSrc from '../../../assets/Vector.png';
-import styles from './styles.module.scss';
 import { config } from '../../../config';
 import {
   useChainId,
@@ -14,8 +13,9 @@ import {
   useWriteContract,
 } from 'wagmi';
 import { abi } from '../../constants/abi';
-import { toBytes32 } from '../../utils/asciiToHex';
 import successImg from '../../../assets/success.png';
+import { CONTRACT_ADDRESS } from '../../constants/common';
+import styles from './styles.module.scss';
 
 export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
   const { data: walletClient } = useWalletClient();
@@ -38,7 +38,7 @@ export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
       try {
         const result = await writeContractAsync({
           abi,
-          address: '0xf37577167A93a177f26409EAA2DeFe696D2b5B59',
+          address: CONTRACT_ADDRESS,
           functionName: 'sendMessage',
           account: walletClient?.account,
           args: [
