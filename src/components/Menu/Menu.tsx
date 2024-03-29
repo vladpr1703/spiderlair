@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './styles.module.scss';
-import img from '../../../assets/Botanix Logo.png';
+import img from '../../../assets/logo.png';
 import { useState } from 'react';
 import { joinClasses } from '../../utils/joinClasses';
 import { MessageModal } from '../MessageModal/MessageModal';
@@ -22,7 +22,10 @@ export const Menu = () => {
     <>
       {isVisible && <MessageModal onClose={() => setIsVisible(false)} />}
       <div className={styles.menu}>
-        <Image className={styles.img} src={img} alt='' priority />
+        <div className={styles.logo}>
+          <Image alt='logo' width={98} height={98} src={img} priority />
+          <span>SpiderLair</span>
+        </div>
         <button
           className={styles['button-message']}
           onClick={handleSendMessage}

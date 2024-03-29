@@ -1,8 +1,10 @@
 import styles from './styles.module.scss';
 import { useRouter } from 'next/router';
 import { useAccountEffect } from 'wagmi';
+import img from '../../../assets/logo.png';
 import { ConnectButton } from '../../components/ConnectButton/ConnectButton';
 import bgImg from '../../../assets/background.png';
+import spiderWeb from '../../../assets/spiderWeb.png';
 import Image from 'next/image';
 import { Typography } from '@mui/material';
 
@@ -19,7 +21,10 @@ export const Auth = () => {
       <main className={styles.main}>
         <Image alt='bg' src={bgImg} priority className={styles.bg} fill />
         <div className={styles.header}>
-          Spiders<span>Lair</span>
+          <Image alt='logo' width={98} height={98} src={img} priority />
+          <div>
+            Spiders<span>Lair</span>
+          </div>
         </div>
         <div className={styles.title}>
           <Typography color='white' fontSize={84} fontWeight={700}>
@@ -31,6 +36,9 @@ export const Auth = () => {
         </div>
         <div className={styles.button}>
           <ConnectButton />
+        </div>
+        <div className={styles.web}>
+          <Image src={spiderWeb} alt='web' width={400} height={400} priority />
         </div>
       </main>
     </div>

@@ -35,10 +35,10 @@ export const ChatBlock = ({ address }: { address: string }) => {
     }
   }, [messages]);
 
-  const getMessages = async () => {
+  const getMessages = async (noLoading?: boolean) => {
     if (wallet?.account.address && address) {
       try {
-        setIsLoading(true);
+        !noLoading && setIsLoading(true);
         const res = await fetchMessages({
           senderAddress: wallet?.account.address,
           recieverAddress: address,
@@ -47,7 +47,7 @@ export const ChatBlock = ({ address }: { address: string }) => {
       } catch (e) {
         console.log(e);
       } finally {
-        setIsLoading(false);
+        !noLoading && setIsLoading(false);
       }
     }
   };
@@ -59,7 +59,7 @@ export const ChatBlock = ({ address }: { address: string }) => {
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (wallet?.account.address && address) {
-      interval = setInterval(() => getMessages(), 30000);
+      interval = setInterval(() => getMessages(true), 30000);
     }
     return () => clearInterval(interval);
   }, [wallet?.account.address, address]);
@@ -91,7 +91,7 @@ export const ChatBlock = ({ address }: { address: string }) => {
   };
 
   useEffect(() => {
-    if (inputRef.current !== null && txHash) {
+    if (inputRef.current?.value && txHash) {
       setIsLoading(true);
       sendMessage({
         message: inputRef.current.value,
@@ -102,7 +102,7 @@ export const ChatBlock = ({ address }: { address: string }) => {
         },
       });
     }
-  }, [txHash]);
+  }, [txHash, inputRef.current?.value]);
 
   return (
     <div className={styles.chat}>

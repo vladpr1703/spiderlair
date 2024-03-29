@@ -1,11 +1,13 @@
 .main {
   min-height: 100vh;
+  max-height: 100vh;
   position: relative;
   display: flex;
   padding: 16px;
   flex-direction: column;
+  overflow: hidden;
   background: rgba(23, 23, 23, 0.75);
-  
+
   .bg {
     position: absolute;
     top: 0;
@@ -19,9 +21,14 @@
     font-family: 'Poppins';
     color: white;
     font-size: 40px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    margin-top: 20px;
+    margin-left: 20px;
 
     span {
-      color: #FFB72B;
+      color: #ffb72b;
     }
   }
 
@@ -34,5 +41,11 @@
 
   .button {
     margin: 184px auto 0;
+  }
+
+  .web {
+    position: absolute;
+    bottom: -100px;
+    left: -100px;
   }
 }

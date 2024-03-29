@@ -12,11 +12,13 @@ export const ContactsConext = createContext({
   contacts: [] as ContactsType[],
   setContacts: (contacts: ContactsType[]) => {},
   walletAddress: '',
+  isLoading: false,
 });
 
 export const Contacts = () => {
   const router = useRouter();
   const { data: wallet } = useWalletClient();
+  const [isLoading, setIsLoading] = useState(false);
   const [contacts, setContacts] = useState<ContactsType[]>(
     [] as ContactsType[]
   );
@@ -28,11 +30,14 @@ export const Contacts = () => {
   useEffect(() => {
     if (wallet?.account.address) {
       const getContacts = async () => {
+        setIsLoading(true);
         try {
           const res = await fetchContacts({ address: wallet?.account.address });
           setContacts(res);
         } catch (e) {
           console.log(e);
+        } finally {
+          setIsLoading(false);
         }
       };
       getContacts();
@@ -45,6 +50,7 @@ export const Contacts = () => {
         contacts,
         setContacts,
         walletAddress: wallet?.account.address || '',
+        isLoading,
       }}
     >
       <div className={styles.main}>

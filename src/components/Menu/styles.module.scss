@@ -9,6 +9,16 @@
   flex-direction: column;
 }
 
+.logo {
+  margin: 48px 24px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 36px;
+  font-family: 'Poppins';
+  font-weight: 600;
+}
+
 .img {
   margin: 24px auto 48px;
 }
