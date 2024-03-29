@@ -7,8 +7,9 @@ import { ConnectButton } from '../../components/ConnectButton/ConnectButton';
 import styles from './styles.module.css';
 import { Menu } from '../../components/Menu/Menu';
 import { RightSide } from '../../components/RightSide/RightSide';
+import { fetchContacts } from '../../../api';
 
-export const MainPage = () => {
+export const Direct = () => {
   const account = useAccount({ config });
   const router = useRouter();
   const { data: wallet } = useWalletClient();
@@ -20,15 +21,15 @@ export const MainPage = () => {
 
   useEffect(() => {
     if (wallet?.account.address) {
-      const fetchContacts = async () => {
-        const response = await fetch(
-          `${process.env.API_URL}/get_contacts_special/${wallet?.account.address}`
-        );
-        const res = await response.json();
-        setContacts(res);
+      const getContacts = async () => {
+        try {
+          const res = await fetchContacts({ address: wallet?.account.address });
+          setContacts(res);
+        } catch (e) {
+          console.log(e);
+        }
       };
-
-      fetchContacts();
+      getContacts();
     }
   }, [wallet?.account.address]);
 

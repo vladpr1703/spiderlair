@@ -8,6 +8,7 @@
   border-right: 1px solid #3b3b3b;
   flex-direction: column;
 }
+
 .img {
   margin: 24px auto 48px;
 }
@@ -25,7 +26,8 @@
 
   &:hover {
     border: 1px solid white;
-}}
+  }
+}
 
 .button {
   width: 100%;
@@ -33,11 +35,23 @@
   color: white;
   font-size: 36px;
   border: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
   margin-bottom: 16px;
   cursor: pointer;
   background-color: black;
+  padding-left: 40px;
+
+  &:hover {
+    border-left: 4px solid #ffb72b;
+    padding-left: 36px;
+  }
+
   &.active {
     background: linear-gradient(90deg, #322409 0%, rgba(50, 36, 9, 0) 100%);
     border-left: 4px solid #ffb72b;
+    padding-left: 36px;
+    color: #ffb72b;
   }
 }

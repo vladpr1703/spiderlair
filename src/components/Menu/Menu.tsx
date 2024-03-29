@@ -4,29 +4,25 @@ import img from '../../../assets/Botanix Logo.png';
 import { useState } from 'react';
 import { joinClasses } from '../../utils/joinClasses';
 import { MessageModal } from '../MessageModal/MessageModal';
+import { MENU_ITEMS } from './constants';
+import { useRouter } from 'next/router';
 
 export const Menu = () => {
-  const [activeItem, setActiveItem] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
-  const handleItemClick = (i: number) => {
-    setActiveItem(i);
+  const router = useRouter();
+  const handleItemClick = (i: number, path: string) => {
+    router.push(path);
   };
 
   const handleSendMessage = () => {
     setIsVisible(true);
   };
 
-  const MENU_ITEMS = [
-    { label: 'My DM' },
-    { label: 'Groups' },
-    { label: 'Contacts' },
-  ];
-
   return (
     <>
       {isVisible && <MessageModal onClose={() => setIsVisible(false)} />}
       <div className={styles.menu}>
-        <Image className={styles.img} src={img} alt='' />
+        <Image className={styles.img} src={img} alt='' priority />
         <button
           className={styles['button-message']}
           onClick={handleSendMessage}
@@ -38,14 +34,18 @@ export const Menu = () => {
             key={i}
             className={joinClasses(styles.button, [
               styles.active,
-              i === activeItem,
+              router.asPath === el.path,
             ])}
-            onClick={() => handleItemClick(i)}
+            onClick={() => handleItemClick(i, el.path)}
           >
+            <Image
+              alt='icon'
+              src={router.asPath === el.path ? el.activeIcon : el.icon}
+            />
             {el.label}
           </button>
         ))}
-      </div>{' '}
+      </div>
     </>
   );
 };

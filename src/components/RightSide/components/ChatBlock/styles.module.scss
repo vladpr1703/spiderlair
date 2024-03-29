@@ -7,6 +7,14 @@
   margin-top: 48px;
   padding: 0 48px 64px;
 
+  .success {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
   .messages {
     display: flex;
     flex-direction: column;
@@ -28,7 +36,7 @@
     .outcome {
       border-radius: 18px;
       min-height: 38px;
-      padding: 6px 12px;
+      padding: 8px;
       margin-right: auto;
       width: fit-content;
       color: white;

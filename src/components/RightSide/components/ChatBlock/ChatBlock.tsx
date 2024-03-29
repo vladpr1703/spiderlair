@@ -12,12 +12,15 @@ import { Messages } from './types';
 import { keccak256, toHex } from 'viem';
 import { abi } from '../../../../constants/abi';
 import { CONTRACT_ADDRESS } from '../../../../constants/common';
+import { fetchMessages, sendMessage } from '../../../../../api';
+import { ColorRing } from 'react-loader-spinner';
 
 export const ChatBlock = ({ address }: { address: string }) => {
   const { data: wallet } = useWalletClient();
   const [messages, setMessages] = useState<Messages>([]);
   const chainId = useChainId();
   const [txHash, setTxHash] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { writeContractAsync } = useWriteContract();
   const { switchChain } = useSwitchChain();
@@ -32,24 +35,31 @@ export const ChatBlock = ({ address }: { address: string }) => {
     }
   }, [messages]);
 
-  const fetchMessages = async () => {
-    const response = await fetch(
-      `${process.env.API_URL}/get_messages_endpoint/${wallet?.account.address}/${address}`
-    );
-    const result: Messages = await response.json();
-    setMessages(result);
+  const getMessages = async () => {
+    if (wallet?.account.address && address) {
+      try {
+        setIsLoading(true);
+        const res = await fetchMessages({
+          senderAddress: wallet?.account.address,
+          recieverAddress: address,
+        });
+        setMessages(res);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   useEffect(() => {
-    if (wallet?.account.address && address) {
-      fetchMessages();
-    }
+    getMessages();
   }, [address, wallet?.account.address]);
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
     if (wallet?.account.address && address) {
-      interval = setInterval(() => fetchMessages(), 30000);
+      interval = setInterval(() => getMessages(), 30000);
     }
     return () => clearInterval(interval);
   }, [wallet?.account.address, address]);
@@ -82,60 +92,71 @@ export const ChatBlock = ({ address }: { address: string }) => {
 
   useEffect(() => {
     if (inputRef.current !== null && txHash) {
-      const sendMessage = async () => {
-        await fetch(
-          `${process.env.API_URL}/send_message_special_endpoint_test`,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              transaction_hash: txHash,
-              message_hash: keccak256(toHex(inputRef.current?.value || '')),
-              message: inputRef.current?.value,
-            }),
-          }
-        );
-      };
-      sendMessage();
+      setIsLoading(true);
+      sendMessage({
+        message: inputRef.current.value,
+        txHash,
+        onFinish: () => {
+          getMessages();
+          setIsLoading(false);
+        },
+      });
     }
   }, [txHash]);
 
   return (
     <div className={styles.chat}>
-      <div className={styles.messages} ref={chatContainerRef}>
-        {messages?.map((el) => {
-          if (el.message) {
-            if (el.sender_address === wallet?.account.address) {
-              return (
-                <div
-                  key={Math.random() * Math.random()}
-                  className={styles.outcome}
-                >
-                  {el.message}
-                </div>
-              );
-            } else {
-              return (
-                <div
-                  key={Math.random() * Math.random()}
-                  className={styles.income}
-                >
-                  {el.message}
-                </div>
-              );
-            }
-          }
-        })}
-      </div>
-      <div className={styles.message}>
-        <input
-          placeholder='Type a message...'
-          className={styles['input-message']}
-          ref={inputRef}
-        />
-        <div className={styles['send-message']} onClick={handleClick}>
-          <Image alt='send' src={sendButton} />
+      {isLoading ? (
+        <div className={styles.success}>
+          <ColorRing
+            visible={true}
+            height='80'
+            width='80'
+            ariaLabel='color-ring-loading'
+            wrapperStyle={{}}
+            wrapperClass='color-ring-wrapper'
+            colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+          />
         </div>
-      </div>
+      ) : address ? (
+        <>
+          <div className={styles.messages} ref={chatContainerRef}>
+            {messages?.map((el) => {
+              if (el.message) {
+                if (el.sender_address === wallet?.account.address) {
+                  return (
+                    <div
+                      key={Math.random() * Math.random()}
+                      className={styles.outcome}
+                    >
+                      {el.message}
+                    </div>
+                  );
+                } else {
+                  return (
+                    <div
+                      key={Math.random() * Math.random()}
+                      className={styles.income}
+                    >
+                      {el.message}
+                    </div>
+                  );
+                }
+              }
+            })}
+          </div>
+          <div className={styles.message}>
+            <input
+              placeholder='Type a message...'
+              className={styles['input-message']}
+              ref={inputRef}
+            />
+            <div className={styles['send-message']} onClick={handleClick}>
+              <Image alt='send' src={sendButton} />
+            </div>
+          </div>
+        </>
+      ) : null}
     </div>
   );
 };

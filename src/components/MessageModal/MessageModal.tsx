@@ -1,7 +1,7 @@
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { keccak256, toHex } from 'viem';
 import Image from 'next/image';
 import imgSrc from '../../../assets/Vector.png';
@@ -16,6 +16,8 @@ import { abi } from '../../constants/abi';
 import successImg from '../../../assets/success.png';
 import { CONTRACT_ADDRESS } from '../../constants/common';
 import styles from './styles.module.scss';
+import { sendMessage } from '../../../api';
+import { ColorRing } from 'react-loader-spinner';
 
 export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
   const { data: walletClient } = useWalletClient();
@@ -24,6 +26,8 @@ export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
   const addressRef = useRef<HTMLInputElement>(null);
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [isSuccess, setSuccess] = useState(false);
+  const [txHash, setTxHash] = useState('');
+  const [isLoading, setLoading] = useState(false);
 
   const { writeContractAsync } = useWriteContract({ config });
 
@@ -48,12 +52,24 @@ export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
           ],
           chainId: 3636,
         });
-        setSuccess(true);
+        setTxHash(result);
       } catch (e) {
         console.log(e);
       }
     }
   };
+
+  useEffect(() => {
+    if (messageRef.current !== null && txHash) {
+      setLoading(true);
+      sendMessage({
+        message: messageRef.current.value,
+        txHash,
+        onSuccess: () => setSuccess(true),
+        onFinish: () => setLoading(false),
+      });
+    }
+  }, [txHash]);
 
   return (
     <>
@@ -110,7 +126,19 @@ export const MessageModal = ({ onClose }: { onClose: VoidFunction }) => {
             alt=''
             onClick={onClose}
           />
-          {isSuccess ? (
+          {isLoading ? (
+            <div className={styles.success}>
+              <ColorRing
+                visible={true}
+                height='80'
+                width='80'
+                ariaLabel='color-ring-loading'
+                wrapperStyle={{}}
+                wrapperClass='color-ring-wrapper'
+                colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+              />
+            </div>
+          ) : isSuccess ? (
             <div className={styles.success}>
               <Typography color='white' fontSize={20}>
                 Message successfully sent

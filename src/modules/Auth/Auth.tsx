@@ -10,7 +10,7 @@ export const Auth = () => {
   const router = useRouter();
 
   useAccountEffect({
-    onConnect: () => router.push('/main'),
+    onConnect: () => router.push('/direct'),
     onDisconnect: () => router.push('/'),
   });
 
