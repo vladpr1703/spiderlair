@@ -14,7 +14,7 @@ export const DialogList = ({
       <div className={styles['search-block']}>
         <input placeholder='Search' className={styles.input}></input>
       </div>
-      {contacts.map((el) => {
+      {contacts?.map((el) => {
         return (
           <Dialog
             handleSetDialog={() => setCurrentDialog(el.friend_address)}
