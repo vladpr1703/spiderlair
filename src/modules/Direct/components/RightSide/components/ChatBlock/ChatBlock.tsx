@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import sendButton from '../../../../../assets/send-button.png';
+import sendButton from '../../../../../../../assets/send-button.png';
 import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import {
@@ -10,9 +10,9 @@ import {
 } from 'wagmi';
 import { Messages } from './types';
 import { keccak256, toHex } from 'viem';
-import { abi } from '../../../../constants/abi';
-import { CONTRACT_ADDRESS } from '../../../../constants/common';
-import { fetchMessages, sendMessage } from '../../../../../api';
+import { abi } from '../../../../../../constants/abi';
+import { CONTRACT_ADDRESS } from '../../../../../../constants/common';
+import { fetchMessages, sendMessage } from '../../../../../../../api';
 import { ColorRing } from 'react-loader-spinner';
 
 export const ChatBlock = ({ address }: { address: string }) => {

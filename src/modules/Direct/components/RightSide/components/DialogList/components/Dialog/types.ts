@@ -3,4 +3,5 @@ export type DialogProps = {
   contactName: string;
   handleSetDialog: VoidFunction;
   isActive: boolean;
+  contactAddress: string;
 };

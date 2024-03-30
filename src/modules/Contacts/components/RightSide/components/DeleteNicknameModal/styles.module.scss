@@ -1,0 +1,29 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  color: white;
+
+  .buttons {
+    display: flex;
+    width: 200px;
+    margin: 0 auto;
+    justify-content: space-between;
+
+    .yes,
+    .no {
+      background-color: rgb(6, 180, 6);
+      outline: none;
+      height: 28px;
+      width: 48px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .no {
+      background-color: rgb(255, 255, 255);
+      width: 40px;
+    }
+  }
+}

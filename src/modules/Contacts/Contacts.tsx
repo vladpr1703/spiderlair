@@ -6,7 +6,7 @@ import styles from './styles.module.scss';
 import { Menu } from '../../components/Menu/Menu';
 import { RightSide } from './components/RightSide/RightSide';
 import { fetchContacts } from '../../../api';
-import { Contacts as ContactsType } from '../../components/RightSide/types';
+import { Contacts as ContactsType } from './components/RightSide/types';
 
 export const ContactsConext = createContext({
   contacts: [] as ContactsType[],

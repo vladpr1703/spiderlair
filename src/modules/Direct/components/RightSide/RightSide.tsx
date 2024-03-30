@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChatBlock } from './components/ChatBlock/ChatBlock';
+import { ChatBlock } from './components/ChatBlock';
 import { DialogList } from './components/DialogList';
 import styles from './styles.module.scss';
 import { Contacts } from './types';

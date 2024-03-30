@@ -1,15 +1,17 @@
 import Image from 'next/image';
 import styles from './styles.module.scss';
 import img from '../../../assets/logo.png';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { joinClasses } from '../../utils/joinClasses';
-import { MessageModal } from '../MessageModal/MessageModal';
 import { MENU_ITEMS } from './constants';
 import { useRouter } from 'next/router';
+import { MessageModal } from './components/MessageModal';
+import { useChainId, useSwitchChain } from 'wagmi';
 
 export const Menu = () => {
   const [isVisible, setIsVisible] = useState(false);
   const router = useRouter();
+  const chainId = useChainId();
   const handleItemClick = (i: number, path: string) => {
     router.push(path);
   };
@@ -17,6 +19,15 @@ export const Menu = () => {
   const handleSendMessage = () => {
     setIsVisible(true);
   };
+
+  const { switchChain } = useSwitchChain();
+
+  useEffect(() => {
+    if (chainId !== 3636) {
+      switchChain({ chainId: 3636 });
+      return;
+    }
+  }, []);
 
   return (
     <>

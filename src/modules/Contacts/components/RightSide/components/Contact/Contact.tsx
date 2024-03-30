@@ -1,10 +1,11 @@
 import { MetaMaskAvatar } from 'react-metamask-avatar';
-import contactEdit from '../../../../../../assets/contactEdit.svg';
+import contactEdit from '../../../../../../../assets/contactEdit.svg';
 import styles from './styles.module.scss';
 import Image from 'next/image';
 import { useState } from 'react';
-import { NickNameModal } from '../NickNameModal/NickNameModal';
-import { DEFAULT_NICKNAME } from '../../../../../constants/common';
+import { NickNameModal } from '../NickNameModal';
+import { DEFAULT_NICKNAME } from '../../../../../../constants/common';
+import { DeleteNicknameModal } from '../DeleteNicknameModal';
 
 export const Contact = ({
   address,
@@ -13,10 +14,17 @@ export const Contact = ({
   address: string;
   nickName?: string;
 }) => {
-  const [isModalOpen, setModalOpen] = useState(false);
+  const [isNicknameModalOpen, setNicknameModalOpen] = useState(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
+
   const handleChangeNick = () => {
-    setModalOpen(true);
+    setNicknameModalOpen(true);
   };
+
+  const handleDeleteNickname = () => {
+    setDeleteModalOpen(true);
+  };
+
   return (
     <div className={styles.contact}>
       <MetaMaskAvatar address={address} size={88} />
@@ -28,12 +36,21 @@ export const Contact = ({
           </div>
         </span>
         <span className={styles.nick}>{address}</span>
+        <button className={styles.delete} onClick={handleDeleteNickname}>
+          Delete
+        </button>
       </div>
-      {isModalOpen && (
+      {isNicknameModalOpen && (
         <NickNameModal
           nickName={nickName || DEFAULT_NICKNAME}
-          onClose={() => setModalOpen(false)}
+          onClose={() => setNicknameModalOpen(false)}
           friendAddress={address}
+        />
+      )}
+      {isDeleteModalOpen && (
+        <DeleteNicknameModal
+          friendAddress={address}
+          onClose={() => setDeleteModalOpen(false)}
         />
       )}
     </div>

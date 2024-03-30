@@ -1,11 +1,11 @@
 import { ColorRing } from 'react-loader-spinner';
-import { Contacts } from '../../../../components/RightSide/types';
-import { Contact } from './Contact/Contact';
+import { Contact } from './components/Contact/';
 import styles from './styles.module.scss';
 import { useContext } from 'react';
 import { ContactsConext } from '../../Contacts';
+import { RightSideProps } from './types';
 
-export const RightSide = ({ contacts }: { contacts: Contacts[] }) => {
+export const RightSide = ({ contacts }: RightSideProps) => {
   const { isLoading } = useContext(ContactsConext);
   return (
     <div className={styles['right-side']}>
@@ -22,13 +22,15 @@ export const RightSide = ({ contacts }: { contacts: Contacts[] }) => {
           />
         </div>
       ) : (
-        contacts?.map((el) => (
-          <Contact
-            key={el.friend_address}
-            address={el.friend_address}
-            nickName={el.friend_nickname}
-          />
-        ))
+        <div className={styles.contacts}>
+          {contacts?.map((el) => (
+            <Contact
+              key={el.friend_address}
+              address={el.friend_address}
+              nickName={el.friend_nickname}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

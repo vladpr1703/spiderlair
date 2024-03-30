@@ -1,13 +1,12 @@
-import Head from 'next/head';
 import { useAccount, useAccountEffect, useWalletClient } from 'wagmi';
 import { config } from '../../../config';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { ConnectButton } from '../../components/ConnectButton/ConnectButton';
-import styles from './styles.module.css';
-import { Menu } from '../../components/Menu/Menu';
-import { RightSide } from '../../components/RightSide/RightSide';
+import { ConnectButton } from '../../components/ConnectButton';
+import styles from './styles.module.scss';
+import { Menu } from '../../components/Menu';
 import { fetchContacts } from '../../../api';
+import { RightSide } from './components/RightSide';
 
 export const Direct = () => {
   const account = useAccount({ config });

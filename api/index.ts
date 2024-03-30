@@ -131,3 +131,35 @@ export const updateNickname = async ({
     console.log(e);
   }
 };
+
+
+export const deleteNickname = async ({
+  userAddress,
+  friendAddress,
+  onSuccess,
+}: {
+  userAddress: string;
+  friendAddress: string;
+  onSuccess?: VoidFunction;
+}) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/user/${userAddress}/friend/${friendAddress}/nickname`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          user_address: userAddress,
+          friend_address: friendAddress,
+        }),
+      }
+    );
+    const res = await response.json();
+    onSuccess?.();
+    return res;
+  } catch (e) {
+    console.log(e);
+  }
+};
