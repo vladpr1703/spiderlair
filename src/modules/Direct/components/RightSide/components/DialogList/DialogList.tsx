@@ -17,15 +17,18 @@ export const DialogList = ({
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    setFiltredContacts(
-      contacts.filter((el) => {
+    if (e.target.value) {
+      const filteredArray = contacts.filter((el) => {
         if (el.friend_nickname) {
-          return el.friend_nickname.includes(e.target.value);
+          return el.friend_nickname.toLowerCase().includes(e.target.value);
         } else {
-          return el.friend_address.includes(e.target.value);
+          return el.friend_address.toLowerCase().includes(e.target.value);
         }
-      })
-    );
+      });
+      setFiltredContacts(filteredArray);
+    } else {
+      setFiltredContacts(contacts);
+    }
   };
 
   return (
@@ -38,11 +41,11 @@ export const DialogList = ({
           value={searchValue}
         />
       </div>
-      {filtredContacts?.map((el) => {
+      {filtredContacts?.map((el, i) => {
         return (
           <Dialog
             handleSetDialog={() => setCurrentDialog(el.friend_address)}
-            key={el.friend_address}
+            key={i}
             isActive={currentDialog === el.friend_address}
             contactAddress={el.friend_address}
             contactName={el.friend_nickname || el.friend_address || ''}
