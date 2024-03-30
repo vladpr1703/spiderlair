@@ -4,6 +4,7 @@ import styles from './styles.module.scss';
 import Image from 'next/image';
 import { useState } from 'react';
 import { NickNameModal } from '../NickNameModal/NickNameModal';
+import { DEFAULT_NICKNAME } from '../../../../../constants/common';
 
 export const Contact = ({
   address,
@@ -30,6 +31,7 @@ export const Contact = ({
       </div>
       {isModalOpen && (
         <NickNameModal
+          nickName={nickName || DEFAULT_NICKNAME}
           onClose={() => setModalOpen(false)}
           friendAddress={address}
         />

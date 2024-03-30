@@ -5,14 +5,21 @@ import imgSrc from '../../../../../../assets/Vector.png';
 import styles from './styles.module.scss';
 import { ColorRing } from 'react-loader-spinner';
 import { ContactsConext } from '../../../Contacts';
-import { createNickname, fetchContacts } from '../../../../../../api';
+import {
+  createNickname,
+  fetchContacts,
+  updateNickname,
+} from '../../../../../../api';
+import { DEFAULT_NICKNAME } from '../../../../../constants/common';
 
 export const NickNameModal = ({
   onClose,
   friendAddress,
+  nickName,
 }: {
   onClose: VoidFunction;
   friendAddress: string;
+  nickName: string;
 }) => {
   const rootRef = useRef<HTMLDivElement>(null);
   const nicknameRef = useRef<HTMLInputElement>(null);
@@ -21,11 +28,19 @@ export const NickNameModal = ({
 
   const handleChangeNickname = async () => {
     if (nicknameRef.current?.value) {
-      await createNickname({
-        userAddress: walletAddress,
-        friendAddress,
-        nickname: nicknameRef.current.value,
-      });
+      if (nickName === DEFAULT_NICKNAME) {
+        await createNickname({
+          userAddress: walletAddress,
+          friendAddress,
+          nickname: nicknameRef.current.value,
+        });
+      } else {
+        await updateNickname({
+          userAddress: walletAddress,
+          friendAddress,
+          nickname: nicknameRef.current.value,
+        });
+      }
       const res = await fetchContacts({ address: walletAddress });
       setContacts(res);
       onClose();

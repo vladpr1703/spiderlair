@@ -1,1 +1,2 @@
 export const CONTRACT_ADDRESS = '0x64b12dE7A063dcB5d514732d1BcFC6089682961B';
+export const DEFAULT_NICKNAME = 'Nickname';

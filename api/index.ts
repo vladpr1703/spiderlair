@@ -98,3 +98,36 @@ export const createNickname = async ({
     console.log(e);
   }
 };
+
+
+export const updateNickname = async ({
+  userAddress,
+  friendAddress,
+  nickname,
+  onSuccess,
+}: {
+  userAddress: string;
+  friendAddress: string;
+  nickname: string;
+  onSuccess?: VoidFunction;
+}) => {
+  try {
+    const response = await fetch(
+      `${API_URL}/user/${userAddress}/friend/${friendAddress}/nickname`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          new_nickname: nickname,
+        }),
+      }
+    );
+    const res = await response.json();
+    onSuccess?.();
+    return res;
+  } catch (e) {
+    console.log(e);
+  }
+};
