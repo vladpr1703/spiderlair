@@ -19,7 +19,12 @@ function MyApp({ Component, pageProps }: AppProps) {
         <RainbowKitProvider>
           <Head>
             <title>SpidersLair</title>
-            <link data-react-helmet='true' rel='shortcut icon' href={favicon} />
+            <link
+              data-react-helmet='true'
+              rel='shortcut icon'
+              href='icon.ico'
+              type='image/x-icon'
+            />
           </Head>
           <Component {...pageProps} />
         </RainbowKitProvider>
