@@ -80,7 +80,7 @@ export const createNickname = async ({
   onSuccess?: VoidFunction;
 }) => {
   try {
-    const response = await fetch(`${API_URL}/user/create_nickname`, {
+    const response = await fetch(`${API_URL}/user/create_friend_nickname`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
