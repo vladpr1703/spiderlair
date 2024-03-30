@@ -1,6 +1,6 @@
 import { keccak256, toHex } from 'viem';
 
-const API_URL = 'https://skadyxd-spiderhack-fast-api-backend-3-8-c488.twc1.net';
+const API_URL = 'https://skadyxd-spiderhack-fast-api-backend-3-8-210d.twc1.net';
 
 export const sendMessage = async ({
   txHash,
