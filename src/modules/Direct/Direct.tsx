@@ -7,6 +7,7 @@ import styles from './styles.module.scss';
 import { Menu } from '../../components/Menu';
 import { fetchContacts } from '../../../api';
 import { RightSide } from './components/RightSide';
+import { Contacts } from './components/RightSide/types';
 
 export const Direct = () => {
   const account = useAccount({ config });
@@ -23,7 +24,12 @@ export const Direct = () => {
       const getContacts = async () => {
         try {
           const res = await fetchContacts({ address: wallet?.account.address });
-          setContacts(res);
+          const table: { [key: string]: number } = {};
+          const result = res.filter(
+            (el: Contacts) =>
+              !table[el.friend_address] && (table[el.friend_address] = 1)
+          );
+          setContacts(result);
         } catch (e) {
           console.log(e);
         }

@@ -33,7 +33,12 @@ export const Contacts = () => {
         setIsLoading(true);
         try {
           const res = await fetchContacts({ address: wallet?.account.address });
-          setContacts(res);
+          const table: { [key: string]: number } = {};
+          const result = res.filter(
+            (el: ContactsType) =>
+              !table[el.friend_address] && (table[el.friend_address] = 1)
+          );
+          setContacts(result);
         } catch (e) {
           console.log(e);
         } finally {
